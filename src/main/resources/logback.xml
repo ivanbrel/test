@@ -1,0 +1,44 @@
+<configuration>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+                %date [%thread] %-5level %logger{6} - %message%n
+			</pattern>
+		</encoder>
+	</appender>
+	<!-- Send debug messages to a file at "c:/jcg.log" -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>./jcg.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>c:/jcg.%i.log.zip</FileNamePattern>
+			<MinIndex>1</MinIndex>
+			<MaxIndex>10</MaxIndex>
+		</rollingPolicy>
+
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>2MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<!-- in order to debug some marshalling issues, this needs to be TRACE -->
+	<logger name="by.ibrel.testapp" level="TRACE" />
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE"/>
+	</root>
+
+	<!--OFF	The highest possible rank and is intended to turn off logging.-->
+	<!--FATAL	Severe errors that cause premature termination. Expect these to be immediately visible on a status console.-->
+	<!--ERROR	Other runtime errors or unexpected conditions. Expect these to be immediately visible on a status console.-->
+	<!--WARN	Use of deprecated APIs, poor use of API, 'almost' errors, other runtime situations that are undesirable or unexpected, but not necessarily "wrong". Expect these to be immediately visible on a status console.-->
+	<!--INFO	Interesting runtime events (startup/shutdown). Expect these to be immediately visible on a console, so be conservative and keep to a minimum.-->
+	<!--DEBUG	Detailed information on the flow through the system. Expect these to be written to logs only.-->
+	<!--TRACE	Most detailed information. Expect these to be written to logs only. Since version 1.2.12.-->
+
+</configuration>

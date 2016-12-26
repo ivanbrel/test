@@ -1,5 +1,6 @@
 package by.ibrel.testapp;
 
+import ch.qos.logback.classic.Logger;
 import org.apache.tomcat.InstanceManager;
 import org.apache.tomcat.SimpleInstanceManager;
 import org.apache.tomcat.util.scan.StandardJarScanner;
@@ -12,8 +13,7 @@ import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.AbstractLifeCycle;
-import org.eclipse.jetty.util.log.JavaUtilLog;
-import org.eclipse.jetty.util.log.Log;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,8 +22,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class Main
@@ -71,21 +69,18 @@ public class Main
 
     public static void main(String[] args) throws Exception
     {
-        int port = 8080;
-        LoggingUtil.config();
-        Log.setLog(new JavaUtilLog());
-
-        Main main = new Main(port);
-        main.start();
-
         new LoadSettings().saveSettings();
         new LoadSettings().getSettings();
 
+        int port = 8080;
+
+        Main main = new Main(port);
+        main.start();
         main.waitForInterrupt();
 
     }
 
-    private static final Logger LOG = Logger.getLogger(Main.class.getName());
+    private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
 
     private int port;
     private Server server;
@@ -114,11 +109,11 @@ public class Main
         // Start Server
         server.start();
 
-        // Show server state
-        if (LOG.isLoggable(Level.FINE))
-        {
-            LOG.fine(server.dump());
-        }
+//        // Show server state
+//        if (LOG.isLoggable(Level.FINE))
+//        {
+//            LOG.fine(server.dump());
+//        }
         this.serverURI = getServerUri(connector);
     }
 
@@ -230,7 +225,7 @@ public class Main
     private ServletHolder defaultServletHolder(URI baseUri)
     {
         ServletHolder holderDefault = new ServletHolder("default", DefaultServlet.class);
-        LOG.info("Base URI: " + baseUri);
+        logger.info("Base URI: " + baseUri);
         holderDefault.setInitParameter("resourceBase", baseUri.toASCIIString());
         holderDefault.setInitParameter("dirAllowed", "true");
         return holderDefault;
@@ -256,7 +251,7 @@ public class Main
         }
         int port = connector.getLocalPort();
         serverURI = new URI(String.format("%s://%s:%d/", scheme, host, port));
-        LOG.info("Server URI: " + serverURI);
+        logger.info("Server URI: " + serverURI);
         return serverURI;
     }
 
