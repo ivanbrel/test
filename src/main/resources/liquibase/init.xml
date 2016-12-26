@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="Create/Update tables" author="brunneng" runOnChange="true">
+
+        <!--&lt;!&ndash; Drop tables if exists &ndash;&gt;-->
+        <!--<sql splitStatements="true">-->
+            <!--DROP TABLE IF EXISTS "Region" CASCADE;-->
+            <!--DROP TABLE IF EXISTS "City" CASCADE;-->
+        <!--</sql>-->
+
+        <!--&lt;!&ndash; Create tables &ndash;&gt;-->
+        <!--<createTable tableName="Region">-->
+            <!--<column name="nID" type="int">-->
+                <!--<constraints primaryKey="true" nullable="false"/>-->
+            <!--</column>-->
+            <!--<column name="sName" type="varchar(50)">-->
+                <!--<constraints nullable="false"/>-->
+            <!--</column>-->
+        <!--</createTable>-->
+        <!--<addAutoIncrement columnName="nID" tableName="Region" columnDataType="int" incrementBy="1" startWith="1000"/>-->
+
+        <!--<createTable tableName="City">-->
+            <!--<column name="nID" type="int">-->
+                <!--<constraints primaryKey="true" nullable="false"/>-->
+            <!--</column>-->
+            <!--<column name="sName" type="varchar(50)">-->
+                <!--<constraints nullable="false"/>-->
+            <!--</column>-->
+            <!--<column name="nID_Region" type="int">-->
+                <!--<constraints nullable="false"-->
+                             <!--foreignKeyName="FK_Region_City"-->
+                             <!--referencedTableName="Region" referencedColumnNames="nID" deleteCascade="true"/>-->
+            <!--</column>-->
+        <!--</createTable>-->
+        <!--<addAutoIncrement columnName="nID" tableName="City" columnDataType="int" incrementBy="1" startWith="1000"/>-->
+
+        <!-- Loading of Data -->
+        <!--<loadData encoding="UTF-8" file="data/Region.csv" tableName="Region" separator=";">-->
+            <!--<column name="nID" type="NUMERIC"/>-->
+            <!--<column name="sName" type="STRING"/>-->
+        <!--</loadData>-->
+        <!--<loadData encoding="UTF-8" file="data/City.csv" tableName="City" separator=";">-->
+            <!--<column name="nID" type="NUMERIC"/>-->
+            <!--<column name="sName" type="STRING"/>-->
+            <!--<column name="nID_Region" type="NUMERIC"/>-->
+        <!--</loadData>-->
+    </changeSet>
+</databaseChangeLog>
