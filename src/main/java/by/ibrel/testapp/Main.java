@@ -24,19 +24,21 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 
-public class Main
-{
+public class Main {
+
     // Resource path pointing to where the WEBROOT is
     private static final String WEBROOT_INDEX = "/webroot/";
-    
-    /**
-     * JspStarter
-     * 
-     * This is added as a bean that is a jetty LifeCycle on the ServletContextHandler.
-     * This bean's doStart method will be called as the ServletContextHandler starts,
-     * and will call the ServletContainerInitializer for the jsp engine.
-     *
-     */
+    private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
+
+    private int port;
+    private Server server;
+    private URI serverURI;
+
+    public Main(int port)
+    {
+        this.port = port;
+    }
+
     public static   class JspStarter extends AbstractLifeCycle implements ServletContextHandler.ServletContainerInitializerCaller
     {
         JettyJasperInitializer sci;
@@ -69,8 +71,8 @@ public class Main
 
     public static void main(String[] args) throws Exception
     {
-        new LoadSettings().saveSettings();
-        new LoadSettings().getSettings();
+        LoadSettings.getInstance().saveSettings();
+        LoadSettings.getInstance().getSettings();
 
         int port = 8080;
 
@@ -78,17 +80,6 @@ public class Main
         main.start();
         main.waitForInterrupt();
 
-    }
-
-    private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
-
-    private int port;
-    private Server server;
-    private URI serverURI;
-
-    public Main(int port)
-    {
-        this.port = port;
     }
 
     public URI getServerURI()
@@ -135,9 +126,6 @@ public class Main
         return indexUri.toURI();
     }
 
-    /**
-     * Establish Scratch directory for the servlet context (used by JSP compilation)
-     */
     private File getScratchDir() throws IOException
     {
         File tempDir = new File(System.getProperty("java.io.tmpdir"));
@@ -152,8 +140,6 @@ public class Main
         }
         return scratchDir;
     }
-
-  
 
     /** 
      * Create a ServletContextHandler and configure it.
@@ -202,8 +188,8 @@ public class Main
         holderJsp.setInitParameter("logVerbosityLevel", "DEBUG");
         holderJsp.setInitParameter("fork", "false");
         holderJsp.setInitParameter("xpoweredBy", "false");
-        holderJsp.setInitParameter("compilerTargetVM", "1.7");
-        holderJsp.setInitParameter("compilerSourceVM", "1.7");
+        holderJsp.setInitParameter("compilerTargetVM", "1.8");
+        holderJsp.setInitParameter("compilerSourceVM", "1.8");
         holderJsp.setInitParameter("keepgenerated", "true");
         return holderJsp;
     }
@@ -214,8 +200,8 @@ public class Main
     private ServletHolder exampleJspFileMappedServletHolder()
     {
         ServletHolder holderAltMapping = new ServletHolder();
-        holderAltMapping.setName("foo.jsp");
-        holderAltMapping.setForcedPath("/test/foo/foo.jsp");
+        holderAltMapping.setName("app.jsp");
+        holderAltMapping.setForcedPath("WEB-INF/tiles/app.jsp");
         return holderAltMapping;
     }
 

@@ -1,0 +1,101 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "1",
+        "author": "ibrel",
+        "changes": [
+          {
+            "createTable": {
+              "tableName": "holder",
+              "columns": [
+                {
+                  "column": {
+                    "name": "id",
+                    "type": "int PRIMARY KEY AUTO_INCREMENT"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "name",
+                    "type": "varchar(50)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "card",
+                    "type": "int"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "createTable": {
+              "tableName": "card",
+              "columns": [
+                {
+                  "column": {
+                    "name": "id",
+                    "type": "int PRIMARY KEY AUTO_INCREMENT"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "numberCard",
+                    "type": "int"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "validity",
+                    "type": "timestamp"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "createTable": {
+              "tableName": "transaction",
+              "columns": [
+                {
+                  "column": {
+                    "name": "id",
+                    "type": "int PRIMARY KEY AUTO_INCREMENT"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "sender",
+                    "type": "int"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "recipient",
+                    "type": "int"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "transferAmount",
+                    "type": "double"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "rollback": [
+          {
+            "sql": {
+              "sql": "drop table holder;"
+            }
+          }
+        ]
+      }
+
+    }
+  ]
+}

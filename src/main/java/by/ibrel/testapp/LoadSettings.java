@@ -1,8 +1,8 @@
 package by.ibrel.testapp;
 
-import by.ibrel.testapp.bean.Brand;
-import by.ibrel.testapp.bean.Commission;
-import by.ibrel.testapp.bean.Currency;
+import by.ibrel.testapp.logic.bean.Brand;
+import by.ibrel.testapp.logic.bean.Commission;
+import by.ibrel.testapp.logic.bean.Currency;
 import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,9 +21,19 @@ import java.math.BigDecimal;
  * @datecreate (26.12.2016)
  * @datechange (26.12.2016)
  */
+/*eager initialization*/
 public class LoadSettings {
 
     private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
+
+    private static final LoadSettings instance = new LoadSettings();
+
+    private LoadSettings() {
+    }
+
+    public static LoadSettings getInstance(){
+        return instance;
+    }
 
     public void saveSettings(){
 
@@ -50,7 +60,9 @@ public class LoadSettings {
         }
     }
 
-    public void getSettings(){
+    public Commission getSettings(){
+
+        Commission commission = null;
 
         logger.debug("getting settings from .xml");
         try {
@@ -59,12 +71,14 @@ public class LoadSettings {
             JAXBContext jaxbContext = JAXBContext.newInstance(Commission.class);
 
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            Commission commission = (Commission) jaxbUnmarshaller.unmarshal(file);
+            commission = (Commission) jaxbUnmarshaller.unmarshal(file);
 
             logger.debug("settings successfully getting from file - " + file.getName());
 
         } catch (JAXBException e) {
             e.printStackTrace();
         }
+
+        return commission;
     }
 }

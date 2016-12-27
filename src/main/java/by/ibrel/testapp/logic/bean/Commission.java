@@ -1,4 +1,4 @@
-package by.ibrel.testapp.bean;
+package by.ibrel.testapp.logic.bean;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
