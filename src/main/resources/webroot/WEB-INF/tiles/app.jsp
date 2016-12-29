@@ -576,77 +576,90 @@
                     <h3 class="masthead-brand">test app</h3>
                     <nav class="nav nav-masthead">
                         <a class="nav-link active" href="/">Home</a>
-                        <a class="nav-link" href="app.jsp">App</a>
+                        <a class="nav-link" href="/app">App</a>
                         <a class="nav-link" href="">Contact</a>
                     </nav>
                 </div>
             </div>
 
-            <form id="" action="/" method="post">
+            <form id="myAjaxRequestForm">
 
                 <p> Cart data</p>
                 <div class="form-group row">
-                    <label for="numberCart" class="col-xs-2 col-form-label">Number cart</label>
+                    <label for="numberCard" class="col-xs-2 col-form-label">Number card</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="text" id="numberCart">
+                        <input class="form-control" type="text" id="numberCard" name="numberCard">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="holdersName" class="col-xs-2 col-form-label">Holder's name</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="search" id="holdersName">
+                        <input class="form-control" type="search" id="holdersName" name="holdersName">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="validity" class="col-xs-2 col-form-label">Validity</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="date" id="validity">
+                        <input class="form-control" type="date" id="validity" name="validity">
                     </div>
                 </div>
 
                 <p> Enter the recipient of the sender data</p>
                 <div class="form-group row">
-                    <label for="numberCartRecipient" class="col-xs-2 col-form-label">Number cart</label>
+                    <label for="numberCardRecipient" class="col-xs-2 col-form-label">Number card</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="number"  id="numberCartRecipient">
+                        <input class="form-control" type="number"  id="numberCardRecipient" name="numberCardRecipient">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="nameRecipient" class="col-xs-2 col-form-label">Name recipient</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="text" id="nameRecipient">
+                        <input class="form-control" type="text" id="nameRecipient" name="nameRecipient">
                 </div>
                 </div>
                 <div class="form-group row">
-                    <label for="recipientValidaty" class="col-xs-2 col-form-label">Validity</label>
+                    <label for="recipientValidity" class="col-xs-2 col-form-label">Validity</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="date" id="recipientValidaty">
+                        <input class="form-control" type="date" id="recipientValidity" name="recipientValidity">
                     </div>
                 </div>
+
                 <%--Currency--%>
-                <p>Currency translation</p>
                 <div class="form-group row">
                     <label for="currency" class="col-xs-2 col-form-label">Currency</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="text" id="currency">
+                        <select class="form-control" id="currency" name="currency">
+                            <option>RUB</option>
+                            <option>BYN</option>
+                            <option>USD</option>
+                            <option>EUR</option>
+                        </select>
                     </div>
                 </div>
+
                 <%--summ--%>
                 <p>Transfer amount</p>
                 <div class="form-group row">
                     <label for="amount" class="col-xs-2 col-form-label">Transfer amount</label>
                     <div class="col-xs-10">
-                        <input class="form-control" type="number" id="amount">
+                        <input class="form-control" type="number" id="amount" name="amount">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <input type="submit" value="Add" class="btn btn-success" />
+                        <input id="myButton" type="submit" value="Add" class="btn btn-success"/>
                         <input type="button" value="Back" onclick="history.back()" class="btn btn-danger"/>
                     </div>
                 </div>
             </form>
+
+            <div id="anotherSection">
+                <fieldset>
+                    <legend>Response from jQuery Ajax Request</legend>
+                    <div id="ajaxResponse"></div>
+                </fieldset>
+            </div>
 
             <div class="mastfoot">
                 <div class="inner">
@@ -664,6 +677,8 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="../../static/js/jquery.min.js.download" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="../../static/js/app.js"></script>
 <script src="../../static/js/bootstrap.min.js.download"></script>
 </body></html>

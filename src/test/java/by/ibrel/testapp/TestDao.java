@@ -14,6 +14,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TestDao {
 
     protected Server server;
@@ -43,11 +48,27 @@ public class TestDao {
 
         holderService.getAll().forEach(holder -> System.out.println(holder.toString()));
 
-        Card card = new Card(1,123,null);
+        Card card = new Card(123,convertStringToDate("1993-05-15"));
+
+        cardDao.insert(card);
 
         Holder holder = new Holder("Kolya", card);
 
         holderDao.insert(holder);
+    }
+
+    private Date convertStringToDate(String date){
+
+        DateFormat df = new SimpleDateFormat("yyyy-mm-DD");
+
+        Date startDate = null;
+
+        try {
+            startDate = df.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return startDate;
     }
 
 }

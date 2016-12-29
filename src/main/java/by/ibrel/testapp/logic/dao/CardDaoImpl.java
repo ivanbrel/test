@@ -29,7 +29,7 @@ public class CardDaoImpl extends AbstractDao<Card> implements CardDao {
 
         try (PreparedStatement ps = connection.prepareStatement(SQL_INSERT_CARD)) {
             ps.setInt(1, card.getNumberCard());
-            ps.setDate(2, (Date) card.getValidity());
+            ps.setDate(2, new java.sql.Date(card.getValidity().getTime()));
             int i = ps.executeUpdate();
             if(i == 1) {
                 return true;

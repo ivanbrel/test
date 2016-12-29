@@ -576,7 +576,7 @@
           <h3 class="masthead-brand">test app</h3>
           <nav class="nav nav-masthead">
             <a class="nav-link active" href="/">Home</a>
-            <a class="nav-link" href="WEB-INF/tiles/app.jsp">App</a>
+            <a class="nav-link" href="/app">App</a>
             <a class="nav-link" href="">Contact</a>
           </nav>
         </div>
@@ -586,7 +586,7 @@
         <h1 class="cover-heading">Start page</h1>
         <p class="lead">breakedown of sanity - this artist i listen when create this app</p>
         <p class="lead">
-          <a href="WEB-INF/tiles/app.jsp" class="btn btn-lg btn-secondary">Go app</a>
+          <a href="/app" class="btn btn-lg btn-secondary">Go app</a>
         </p>
       </div>
 

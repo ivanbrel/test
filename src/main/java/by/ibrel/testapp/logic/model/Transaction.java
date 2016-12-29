@@ -31,12 +31,16 @@ public class Transaction implements Serializable {
     public Transaction() {
     }
 
-    public Transaction(int id, Holder sender, Holder recipient, Commission commission, BigDecimal transferAmount) {
-        this.id = id;
+    public Transaction(Holder sender, Holder recipient, Commission commission, BigDecimal transferAmount){
         this.sender = sender;
         this.recipient = recipient;
         this.commission = commission;
         this.transferAmount = transferAmount;
+    }
+
+    public Transaction(int id, Holder sender, Holder recipient, Commission commission, BigDecimal transferAmount) {
+        this(sender,recipient,commission,transferAmount);
+        this.id = id;
     }
 
     public BigDecimal getOffero(){

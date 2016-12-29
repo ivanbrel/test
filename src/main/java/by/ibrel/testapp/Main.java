@@ -1,5 +1,6 @@
 package by.ibrel.testapp;
 
+import by.ibrel.testapp.web.controller.TransactionController;
 import ch.qos.logback.classic.Logger;
 import org.apache.tomcat.InstanceManager;
 import org.apache.tomcat.SimpleInstanceManager;
@@ -33,6 +34,7 @@ public class Main {
     private int port;
     private Server server;
     private URI serverURI;
+    private by.ibrel.testapp.logic.dao.ConnectionFactory connectionFactory;
 
     public Main(int port)
     {
@@ -69,10 +71,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws Exception
-    {
-        LoadSettings.getInstance().saveSettings();
-        LoadSettings.getInstance().getSettings();
+    public static void main(String[] args) throws Exception {
 
         int port = 8080;
 
@@ -87,8 +86,8 @@ public class Main {
         return serverURI;
     }
 
-    public void start() throws Exception
-    {
+    public void start() throws Exception {
+
         server = new Server();
         ServerConnector connector = connector();
         server.addConnector(connector);
@@ -155,13 +154,16 @@ public class Main {
         sch.setAttribute("javax.servlet.context.tempdir", scratchDir);
         sch.setResourceBase(baseUri.toASCIIString());
         sch.setAttribute(InstanceManager.class.getName(),  new SimpleInstanceManager());
+
         //add a bean that will call the jsp engine's ServletContaineInitializer as the context starts
         sch.addBean(new JspStarter(sch));
         sch.setClassLoader(getUrlClassLoader());
         sch.addServlet(jspServletHolder(), "*.jsp");
+
         // Add Application Servlets
-        sch.addServlet(exampleJspFileMappedServletHolder(), "/test/foo/");
+        sch.addServlet(mainJspFileMappedServletHolder(), "/app");
         sch.addServlet(defaultServletHolder(baseUri), "/");
+        sch.addServlet(TransactionController.class, "/apppost");
         return sch;
     }
   
@@ -174,8 +176,7 @@ public class Main {
      */
     private ClassLoader getUrlClassLoader()
     {
-        ClassLoader jspClassLoader = new URLClassLoader(new URL[0], this.getClass().getClassLoader());
-        return jspClassLoader;
+        return new URLClassLoader(new URL[0], this.getClass().getClassLoader());
     }
 
     /**
@@ -197,11 +198,11 @@ public class Main {
     /**
      * Create Example of mapping jsp to path spec
      */
-    private ServletHolder exampleJspFileMappedServletHolder()
+    private ServletHolder mainJspFileMappedServletHolder()
     {
         ServletHolder holderAltMapping = new ServletHolder();
         holderAltMapping.setName("app.jsp");
-        holderAltMapping.setForcedPath("WEB-INF/tiles/app.jsp");
+        holderAltMapping.setForcedPath("/WEB-INF/tiles/app.jsp");
         return holderAltMapping;
     }
 
