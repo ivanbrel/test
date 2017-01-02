@@ -64,6 +64,6 @@ public class CardDaoImpl extends AbstractDao<Card> implements CardDao {
 
     @Override
     Card extractEntityFromResultSet(ResultSet rs) throws SQLException {
-        return new Card(rs.getInt("id"), rs.getInt("numbercard"), rs.getDate("validity"));
+        return new Card(rs.getInt("id"), rs.getInt("numbercard"), rs.getString("validity"));
     }
 }

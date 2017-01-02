@@ -11,12 +11,6 @@ $(document).ready(function() {
         //get the form data and then serialize that
         dataString = $("#myAjaxRequestForm").serialize();
 
-        // get the form data using another method
-        // var numberCart = $("input#numberCart").val();
-        // dataString = "numberCart=" + numberCart;
-
-
-
         //make the AJAX request, dataType is set to json
         //meaning we are expecting JSON data in response from the server
         $.ajax({
@@ -27,24 +21,29 @@ $(document).ready(function() {
 
             //if received a response from the server
             success: function( data, textStatus, jqXHR) {
-                //our country code was correct so we have some information to display
+
                 console.log(data);
                 if(data.success){
 
-                    // $("#ajaxResponse").html("");
-                    // $("#ajaxResponse").append("<b>SENDER:</b> " + data.transaction.sender );
-                    // $("#ajaxResponse").append("<b>RECIPIENT:</b> " + data.transaction.recipient);
-                    // $("#ajaxResponse").append("<b>Commission:</b> " + data.transaction.commission);
-                    // $("#ajaxResponse").append("<b>transferAmount:</b> " + data.transaction.transferAmount);
+                    $("#myAjaxRequestForm").hide();
+
                     $("#ajaxResponse").html("");
-                    $("#ajaxResponse").append("<b>SENDER:</b> " + data.transaction);
-                    // $("#ajaxResponse").append("<b>SENDER:</b> " + data.transaction.sender );
+                    $("#ajaxResponse").append("<b>SENDER NAME:</b> " + data.resp.senderName + "<br>");
+                    $("#ajaxResponse").append("<b>SENDER CARD ID:</b> " + data.resp.senderCardId + "<br>");
+                    $("#ajaxResponse").append("<b>SENDER CARD VALIDITY:</b>" + data.resp.senderCardValidity + "<br>");
+                    $("#ajaxResponse").append("<b>RECIPIENT NAME:</b> " + data.resp.recipientName + "<br>");
+                    $("#ajaxResponse").append("<b>RECIPIENT CARD ID:</b> " + data.resp.recipientCardId + "<br>");
+                    $("#ajaxResponse").append("<b>RECIPIENT CARD VALIDITY:</b> " + data.resp.recipientCardValidity + "<br>");
+                    $("#ajaxResponse").append("<b>Commission brand:</b> " + data.resp.commissionBrand + "<br>");
+                    $("#ajaxResponse").append("<b>Commission currency:</b> "+  data.resp.commissionCurrency + "<br>");
+                    $("#ajaxResponse").append("<b>Commission value:</b> "+ + data.resp.commissionValue + "<br>");
+                    $("#ajaxResponse").append("<b>Transfer amount:</b> " + data.resp.transferAmount + "<br>");
+                    $("#ajaxResponse").append("<b>Transfer cost:</b> " + data.resp.transactionCost);
                 }
                 //display error message
                 else {
                     $("#ajaxResponse").html("<div><b>Transaction fail!</b></div>");
-                    $("#ajaxResponse").html("");
-                    $("#ajaxResponse").append("<b>SENDER:</b> " + data.transaction );
+
                 }
             },
 

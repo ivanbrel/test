@@ -41,6 +41,7 @@ public class LoadSettings {
 
         Commission commission = new Commission((long)1, Brand.AMERICAN_EXPRESS, Currency.BYN, BigDecimal.TEN);
 
+
         logger.debug(commission.toString());
 
         try {

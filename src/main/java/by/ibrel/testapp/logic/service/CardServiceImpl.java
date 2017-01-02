@@ -4,6 +4,10 @@ import by.ibrel.testapp.logic.dao.AbstractDao;
 import by.ibrel.testapp.logic.dao.impl.CardDao;
 import by.ibrel.testapp.logic.model.Card;
 import by.ibrel.testapp.logic.service.impl.CardService;
+import ch.qos.logback.classic.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Date;
 
 /**
  * @author ibrel
@@ -14,10 +18,21 @@ import by.ibrel.testapp.logic.service.impl.CardService;
  */
 public class CardServiceImpl extends AbstractService<Card> implements CardService {
 
+    private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
+
     private final CardDao cardDao;
 
     public CardServiceImpl(CardDao cardDao) {
         super((AbstractDao<Card>) cardDao);
         this.cardDao = cardDao;
+    }
+
+    @Override
+    public Card createCard(int numberCard, String validityHolderCard) {
+        Card card = new Card(numberCard, validityHolderCard);
+        save(card);
+
+        logger.info("Create card " + card.toString());
+        return card;
     }
 }

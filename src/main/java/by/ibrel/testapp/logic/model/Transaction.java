@@ -50,9 +50,9 @@ public class Transaction implements Serializable {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("SENDER - ").append(sender.getName()).append(";\n")
-                .append("RECIPIENT - ").append(recipient.getName()).append(";\n")
-                .append("transfer amount - ").append(transferAmount).append(";\n")
+        builder.append("SENDER - ").append(sender.getName()).append("; ")
+                .append("RECIPIENT - ").append(recipient.getName()).append("; ")
+                .append("transfer amount - ").append(transferAmount).append("; ")
                 .append("transaction cost - ").append(getOffero()).append(".");
         return builder.toString();
     }

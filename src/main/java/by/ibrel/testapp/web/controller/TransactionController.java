@@ -2,10 +2,14 @@ package by.ibrel.testapp.web.controller;
 
 import by.ibrel.testapp.LoadSettings;
 import by.ibrel.testapp.logic.bean.Commission;
+import by.ibrel.testapp.logic.bean.TransactionDto;
 import by.ibrel.testapp.logic.dao.CardDaoImpl;
 import by.ibrel.testapp.logic.dao.ConnectionFactory;
 import by.ibrel.testapp.logic.dao.HolderDaoImpl;
 import by.ibrel.testapp.logic.dao.TransactionDaoImpl;
+import by.ibrel.testapp.logic.dao.impl.CardDao;
+import by.ibrel.testapp.logic.dao.impl.HolderDao;
+import by.ibrel.testapp.logic.dao.impl.TransactionDao;
 import by.ibrel.testapp.logic.model.Card;
 import by.ibrel.testapp.logic.model.Holder;
 import by.ibrel.testapp.logic.model.Transaction;
@@ -51,9 +55,12 @@ public class TransactionController extends HttpServlet{
 
     public TransactionController() {
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        this.cardService = new CardServiceImpl(new CardDaoImpl(connectionFactory));
-        this.holderService = new HolderServiceImpl(new HolderDaoImpl(connectionFactory, new CardDaoImpl(connectionFactory)));
-        this.transactionService = new TransactionServiceImpl(new TransactionDaoImpl(connectionFactory, new HolderDaoImpl(connectionFactory, new CardDaoImpl(connectionFactory)), new CardDaoImpl(connectionFactory)));
+        CardDao cardDao = new CardDaoImpl(connectionFactory);
+        HolderDao holderDao = new HolderDaoImpl(connectionFactory, cardDao);
+        TransactionDao transactionDao = new TransactionDaoImpl(connectionFactory,holderDao,cardDao);
+        this.cardService = new CardServiceImpl(cardDao);
+        this.holderService = new HolderServiceImpl(holderDao);
+        this.transactionService = new TransactionServiceImpl(transactionDao);
         this.loadSettings = LoadSettings.getInstance();
     }
 
@@ -71,88 +78,34 @@ public class TransactionController extends HttpServlet{
         String currency = request.getParameter("currency");
         String amount = request.getParameter("amount");
 
-        logger.info("получили данные");
-        // Про валидацию ничего не сказано , я её и не буду делать , допустим пользователь ввёл коРэтные данные
+        logger.info("Get data");
 
         PrintWriter out = response.getWriter();
 
-        response.setContentType("text/html");
-        response.setHeader("Cache-control", "no-cache, no-store");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Expires", "-1");
+        final Holder sender = holderService.creteHolder(holderName,
+                cardService.createCard(numberCardHolder, validityHolderCard));
+        final Holder recipient = holderService.creteHolder(nameRecipient,
+                cardService.createCard(numberCardRecipient, recipientValidity));
+        final Transaction transaction = transactionService.createTransaction(sender, recipient, getCommission(currency), new BigDecimal(amount));
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST");
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        response.setHeader("Access-Control-Max-Age", "86400");
-
-        Gson gson = new Gson();
         JsonObject myObj = new JsonObject();
 
-        Holder sender = creteHolder(holderName, createCard(numberCardHolder, convertStringToDate(validityHolderCard)));
-
-        Holder recipient = creteHolder(nameRecipient, createCard(numberCardRecipient, convertStringToDate(recipientValidity)));
-
-        BigDecimal bigDecimal = new BigDecimal(amount);
-
-        Transaction transaction = createTransaction(sender, recipient, getCommission(currency), bigDecimal);
-
-        JsonElement transactionObj = gson.toJsonTree(transaction);
-
         if(transaction != null)
-            myObj.addProperty("success", false);
+            myObj.addProperty("success", true);
 
-        myObj.add("transaction", transactionObj);
+        myObj.add("resp", new Gson().toJsonTree(new TransactionDto(transaction)));
+
         out.println(myObj);
-
         out.close();
-    }
-
-    private Card createCard(Integer numberCard, Date validityHolderCard){
-        Card card = new Card(numberCard, validityHolderCard);
-        cardService.save(card);
-
-        logger.info("создали карту " + card.toString());
-        return card;
-    }
-
-    private Holder creteHolder(String name, Card card){
-        Holder holder = new Holder(name, card);
-        holderService.save(holder);
-
-        logger.info("создали черкана " + holder.toString());
-        return holder;
-    }
-
-    private Transaction createTransaction(Holder sender, Holder recipient, Commission commission, BigDecimal transferAmount){
-        Transaction transaction = new Transaction(sender, recipient, commission, transferAmount);
-        transactionService.save(transaction);
-
-        logger.info("Транзакция создана " + transaction.toString());
-        return transaction;
-    }
-
-    private Date convertStringToDate(String date){
-
-        DateFormat df = new SimpleDateFormat("yyyy-mm-DD");
-
-        Date startDate = null;
-
-        try {
-            startDate = df.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        logger.info("Канвертнули дату " + date);
-        return startDate;
     }
 
     private Commission getCommission(String currency){
 
+        loadSettings.saveSettings();
+
         Commission commission = loadSettings.getSettings();
 
-        logger.info("коммисия " + commission.toString());
+        logger.info("Commission " + commission.toString());
         return commission;
     }
 }

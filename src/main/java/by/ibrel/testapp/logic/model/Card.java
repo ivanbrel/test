@@ -6,6 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -30,13 +33,28 @@ public class Card implements Serializable{
     public Card() {
     }
 
-    public Card(Integer numberCard, Date validity) {
+    public Card(Integer numberCard, String validity) {
         this.numberCard = numberCard;
-        this.validity = validity;
+        this.validity = convertStringToDate(validity);
     }
 
-    public Card(int id, Integer numberCard, Date validity) {
+    public Card(int id, Integer numberCard, String validity) {
         this(numberCard, validity);
         this.id = id;
+    }
+
+    private Date convertStringToDate(String date){
+
+        DateFormat df = new SimpleDateFormat("yyyy-mm-DD");
+
+        Date startDate = null;
+
+        try {
+            startDate = df.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return startDate;
     }
 }

@@ -1,6 +1,10 @@
 package by.ibrel.testapp.logic.service.impl;
 
+import by.ibrel.testapp.logic.bean.Commission;
+import by.ibrel.testapp.logic.model.Holder;
 import by.ibrel.testapp.logic.model.Transaction;
+
+import java.math.BigDecimal;
 
 /**
  * @author ibrel
@@ -10,4 +14,6 @@ import by.ibrel.testapp.logic.model.Transaction;
  * @datechange (27.12.2016)
  */
 public interface TransactionService extends CommonService<Transaction> {
+
+    Transaction createTransaction(Holder sender, Holder recipient, Commission commission, BigDecimal transferAmount);
 }

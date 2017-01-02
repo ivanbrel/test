@@ -1,5 +1,6 @@
 package by.ibrel.testapp.logic.service.impl;
 
+import by.ibrel.testapp.logic.model.Card;
 import by.ibrel.testapp.logic.model.Holder;
 
 /**
@@ -10,4 +11,6 @@ import by.ibrel.testapp.logic.model.Holder;
  * @datechange (27.12.2016)
  */
 public interface HolderService extends CommonService<Holder>{
+
+    Holder creteHolder(String name, Card card);
 }
