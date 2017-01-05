@@ -15,7 +15,7 @@ public interface CrudDao<T> {
 
     Set<T> getAll();
 
-    boolean insert(T t);
+    T insert(T t);
 
     boolean update(T t);
 

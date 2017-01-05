@@ -7,7 +7,7 @@ import by.ibrel.testapp.logic.service.impl.CardService;
 import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
+import javax.transaction.Transactional;
 
 /**
  * @author ibrel
@@ -16,6 +16,8 @@ import java.util.Date;
  * @datecreate (27.12.2016)
  * @datechange (27.12.2016)
  */
+
+@Transactional
 public class CardServiceImpl extends AbstractService<Card> implements CardService {
 
     private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
@@ -29,10 +31,6 @@ public class CardServiceImpl extends AbstractService<Card> implements CardServic
 
     @Override
     public Card createCard(int numberCard, String validityHolderCard) {
-        Card card = new Card(numberCard, validityHolderCard);
-        save(card);
-
-        logger.info("Create card " + card.toString());
-        return card;
+        return save(new Card(numberCard, validityHolderCard));
     }
 }

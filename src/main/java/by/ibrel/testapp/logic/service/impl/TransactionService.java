@@ -1,6 +1,6 @@
 package by.ibrel.testapp.logic.service.impl;
 
-import by.ibrel.testapp.logic.bean.Commission;
+import by.ibrel.testapp.logic.model.Commission;
 import by.ibrel.testapp.logic.model.Holder;
 import by.ibrel.testapp.logic.model.Transaction;
 

@@ -1,6 +1,5 @@
 package by.ibrel.testapp.logic.model;
 
-import by.ibrel.testapp.logic.bean.Commission;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

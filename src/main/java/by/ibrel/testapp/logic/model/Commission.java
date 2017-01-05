@@ -1,5 +1,7 @@
-package by.ibrel.testapp.logic.bean;
+package by.ibrel.testapp.logic.model;
 
+import by.ibrel.testapp.logic.bean.Brand;
+import by.ibrel.testapp.logic.bean.Currency;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,29 +17,29 @@ import java.math.BigDecimal;
  * @datecreate (26.12.2016)
  * @datechange (26.12.2016)
  */
-@Getter@Setter
+@Getter
+@Setter
 @ToString
 @EqualsAndHashCode
+@XmlRootElement(name = "commission")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement
 public class Commission {
 
-    @XmlAttribute(name = "id")
-    private Long id;
     @XmlElement(name = "brand")
     private Brand brand;
     @XmlElement(name = "currency")
     private Currency currency;
     @XmlElement(name = "values")
     private BigDecimal value;
+    Boolean childrenAllowed;
 
     public Commission() {
     }
 
-    public Commission(Long id, Brand brand, Currency currency, BigDecimal value) {
-        this.id = id;
+    public Commission(Brand brand, Currency currency, BigDecimal value) {
         this.brand = brand;
         this.currency = currency;
         this.value = value;
     }
+
 }

@@ -34,7 +34,6 @@ public class Main {
     private int port;
     private Server server;
     private URI serverURI;
-    private by.ibrel.testapp.logic.dao.ConnectionFactory connectionFactory;
 
     public Main(int port)
     {
@@ -73,17 +72,12 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        int port = 8080;
+        int port = 8081;
 
         Main main = new Main(port);
         main.start();
         main.waitForInterrupt();
 
-    }
-
-    public URI getServerURI()
-    {
-        return serverURI;
     }
 
     public void start() throws Exception {
@@ -98,13 +92,10 @@ public class Main {
 
         // Start Server
         server.start();
-
-//        // Show server state
-//        if (LOG.isLoggable(Level.FINE))
-//        {
-//            LOG.fine(server.dump());
-//        }
         this.serverURI = getServerUri(connector);
+
+        //Load settings
+        LoadSettings.getInstance().saveSettings();
     }
 
     private ServerConnector connector()

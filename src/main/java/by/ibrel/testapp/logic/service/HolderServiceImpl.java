@@ -8,6 +8,8 @@ import by.ibrel.testapp.logic.service.impl.HolderService;
 import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.transaction.Transactional;
+
 /**
  * @author ibrel
  * @version 1.0
@@ -15,6 +17,8 @@ import org.slf4j.LoggerFactory;
  * @datecreate (27.12.2016)
  * @datechange (27.12.2016)
  */
+
+@Transactional
 public class HolderServiceImpl extends AbstractService<Holder> implements HolderService{
 
     private final Logger logger = (Logger) LoggerFactory.getLogger(getClass());
@@ -28,10 +32,6 @@ public class HolderServiceImpl extends AbstractService<Holder> implements Holder
 
     @Override
     public Holder creteHolder(String name, Card card){
-        Holder holder = new Holder(name, card);
-        save(holder);
-
-        logger.info("Create holder " + holder.toString());
-        return holder;
+        return save(new Holder(name, card));
     }
 }

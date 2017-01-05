@@ -7,19 +7,11 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>test app</title>
-
     <!-- Bootstrap core CSS -->
     <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="../../static/css/cover.css" rel="stylesheet">
-    <style type="text/css">
-        :root #content > #right > .dose > .dosesingle,
-        :root #content > #center > .dose > .dosesingle
-        { display: none !important; }</style><style type="text/css">
-    </style>
 </head>
 
 <body>
@@ -41,87 +33,84 @@
                 </div>
             </div>
 
-            <form id="myAjaxRequestForm">
+            <div class="container">
 
-                <p> Cart data</p>
-                <div class="form-group row">
-                    <label for="numberCard" class="col-xs-2 col-form-label">Number card</label>
-                    <div class="col-xs-10">
-                        <input class="form-control" type="text" id="numberCard" name="numberCard">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="holdersName" class="col-xs-2 col-form-label">Holder's name</label>
-                    <div class="col-xs-10">
-                        <input class="form-control" type="search" id="holdersName" name="holdersName">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="validity" class="col-xs-2 col-form-label">Validity</label>
-                    <div class="col-xs-10">
-                        <input class="form-control" type="date" id="validity" name="validity">
-                    </div>
-                </div>
+                <form id="myAjaxRequestForm" class="">
 
-                <p> Enter the recipient of the sender data</p>
-                <div class="form-group row">
-                    <label for="numberCardRecipient" class="col-xs-2 col-form-label">Number card</label>
-                    <div class="col-xs-10">
-                        <input class="form-control" type="number"  id="numberCardRecipient" name="numberCardRecipient">
+                    <p> Cart data</p>
+                    <div class="form-group row">
+                        <label for="numberCard" class="col-xs-2 col-form-label">Number card</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" type="number" id="numberCard" name="numberCard" required="required">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="nameRecipient" class="col-xs-2 col-form-label">Name recipient</label>
-                    <div class="col-xs-10">
-                        <input class="form-control" type="text" id="nameRecipient" name="nameRecipient">
-                </div>
-                </div>
-                <div class="form-group row">
-                    <label for="recipientValidity" class="col-xs-2 col-form-label">Validity</label>
-                    <div class="col-xs-10">
-                        <input class="form-control" type="date" id="recipientValidity" name="recipientValidity">
+                    <div class="form-group row">
+                        <label for="holdersName" class="col-xs-2 col-form-label">Holder's name</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" type="text" id="holdersName" name="holdersName" required="required">
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group row">
+                        <label for="validity" class="col-xs-2 col-form-label">Validity</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" type="date" id="validity" name="validity" required="required">
+                        </div>
+                    </div>
 
-                <%--Currency--%>
-                <div class="form-group row">
-                    <label for="currency" class="col-xs-2 col-form-label">Currency</label>
-                    <div class="col-xs-10">
-                        <select class="form-control" id="currency" name="currency">
-                            <option>RUB</option>
-                            <option>BYN</option>
-                            <option>USD</option>
-                            <option>EUR</option>
-                        </select>
+                    <p> Enter the recipient of the sender data</p>
+                    <div class="form-group row">
+                        <label for="numberCardRecipient" class="col-xs-2 col-form-label">Number card</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" type="number"  id="numberCardRecipient" name="numberCardRecipient" required="required">
+                        </div>
                     </div>
-                </div>
-
-                <%--summ--%>
-                <p>Transfer amount</p>
-                <div class="form-group row">
-                    <label for="amount" class="col-xs-2 col-form-label">Transfer amount</label>
-                    <div class="col-xs-10">
-                        <input class="form-control" type="number" id="amount" name="amount">
+                    <div class="form-group row">
+                        <label for="nameRecipient" class="col-xs-2 col-form-label">Name recipient</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" type="text" id="nameRecipient" name="nameRecipient" required="required">
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                        <input id="myButton" type="submit" value="Add" class="btn btn-success"/>
-                        <input type="button" value="Back" onclick="history.back()" class="btn btn-danger"/>
+                    <div class="form-group row">
+                        <label for="recipientValidity" class="col-xs-2 col-form-label">Validity</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" type="date" id="recipientValidity" name="recipientValidity" required="required">
+                        </div>
                     </div>
-                </div>
-            </form>
 
+                    <%--Currency--%>
+                    <div class="form-group row">
+                        <label for="currency" class="col-xs-2 col-form-label">Currency</label>
+                        <div class="col-xs-10">
+                            <select class="form-control" id="currency" name="currency">
+                                <option>RUB</option>
+                                <option>BYN</option>
+                                <option>USD</option>
+                                <option>EUR</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <%--summ--%>
+                    <p>Transfer amount</p>
+                    <div class="form-group row">
+                        <label for="amount" class="col-xs-2 col-form-label">Transfer amount</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" type="number" id="amount" name="amount" required="required">
+                        </div>
+                    </div>
+
+                    <button id="myButton" type="submit" value="Add" class="btn btn-primary">Transfer cash</button>
+                </form>
+            </div>
+
+            <%--<div id="anotherSection" style="display: none">--%>
             <div id="anotherSection">
-                <fieldset>
-                    <div id="ajaxResponse"></div>
-                </fieldset>
+                <div id="ajaxResponse"></div>
             </div>
 
             <div class="mastfoot">
                 <div class="inner">
-                    <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://www.linkedin.com/in/ivan-brel-32a0b0124?trk=hp-identity-name">ibrel</a>.</p>
+                    <p> by <a href="https://www.linkedin.com/in/ivan-brel-32a0b0124?trk=hp-identity-name">ibrel</a>.</p>
                 </div>
             </div>
 
@@ -131,12 +120,8 @@
 
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="../../static/js/jquery.min.js" crossorigin="anonymous"></script>
-<%--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js" type="text/javascript"></script>--%>
-<%--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>--%>
 <script type="text/javascript" src="../../static/js/app.js"></script>
 <script src="../../static/js/bootstrap.min.js"></script>
 </body></html>

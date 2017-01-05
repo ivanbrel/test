@@ -27,18 +27,39 @@ $(document).ready(function() {
 
                     $("#myAjaxRequestForm").hide();
 
-                    $("#ajaxResponse").html("");
-                    $("#ajaxResponse").append("<b>SENDER NAME:</b> " + data.resp.senderName + "<br>");
-                    $("#ajaxResponse").append("<b>SENDER CARD ID:</b> " + data.resp.senderCardId + "<br>");
-                    $("#ajaxResponse").append("<b>SENDER CARD VALIDITY:</b>" + data.resp.senderCardValidity + "<br>");
-                    $("#ajaxResponse").append("<b>RECIPIENT NAME:</b> " + data.resp.recipientName + "<br>");
-                    $("#ajaxResponse").append("<b>RECIPIENT CARD ID:</b> " + data.resp.recipientCardId + "<br>");
-                    $("#ajaxResponse").append("<b>RECIPIENT CARD VALIDITY:</b> " + data.resp.recipientCardValidity + "<br>");
-                    $("#ajaxResponse").append("<b>Commission brand:</b> " + data.resp.commissionBrand + "<br>");
-                    $("#ajaxResponse").append("<b>Commission currency:</b> "+  data.resp.commissionCurrency + "<br>");
-                    $("#ajaxResponse").append("<b>Commission value:</b> "+ + data.resp.commissionValue + "<br>");
-                    $("#ajaxResponse").append("<b>Transfer amount:</b> " + data.resp.transferAmount + "<br>");
-                    $("#ajaxResponse").append("<b>Transfer cost:</b> " + data.resp.transactionCost);
+                    $("#ajaxResponse").html("" +
+                        "<table class='table table-striped table-reflow'>" +
+                            "<thead>" +
+                                "<tr>" +
+                                    "<th>SENDER NAME:</th>" +
+                                    "<th>SENDER CARD ID:</th>" +
+                                    "<th>SENDER CARD VALIDITY:</th>" +
+                                    "<th>RECIPIENT NAME:</th>" +
+                                    "<th>RECIPIENT CARD ID:</th>" +
+                                    "<th>RECIPIENT CARD VALIDITY:</th> " +
+                                    "<th>Commission brand:</th> " +
+                                    "<th>Commission currency:</th> " +
+                                    "<th>Commission value:</th> " +
+                                    "<th>Transfer amount:</th> " +
+                                    "<th>Transfer cost:</th>" +
+                                "</tr>" +
+                            "</thead>" +
+                            "<tbody>" +
+                                "<tr>" +
+                                    "<td>" + data.resp.senderName  +"</td> " +
+                                    "<td>" + data.resp.senderCardId + "</td> " +
+                                    "<td>" + data.resp.senderCardValidity + "</td> " +
+                                    "<td>" + data.resp.recipientName + "</td> " +
+                                    "<td>" + data.resp.recipientCardId + "</td> " +
+                                    "<td>" + data.resp.recipientCardValidity + "</td> " +
+                                    "<td>" + data.resp.commissionBrand + "</td> " +
+                                    "<td>" + data.resp.commissionCurrency + "</td> " +
+                                    "<td>" + data.resp.commissionValue + "</td> " +
+                                    "<td>" + data.resp.transferAmount + "</td> " +
+                                    "<td>" + data.resp.transactionCost + "</td> " +
+                                "</tr>" +
+                            "</tbody>" +
+                        "</table>");
                 }
                 //display error message
                 else {

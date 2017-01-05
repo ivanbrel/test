@@ -19,5 +19,5 @@ public interface CommonService<T> {
 
     void update(T t);
 
-    void save(T t);
+    T save(T t);
 }

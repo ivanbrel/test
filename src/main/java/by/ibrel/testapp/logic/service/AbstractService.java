@@ -3,6 +3,7 @@ package by.ibrel.testapp.logic.service;
 import by.ibrel.testapp.logic.dao.AbstractDao;
 import by.ibrel.testapp.logic.service.impl.CommonService;
 
+import javax.transaction.Transactional;
 import java.util.Set;
 
 /**
@@ -12,6 +13,8 @@ import java.util.Set;
  * @datecreate (27.12.2016)
  * @datechange (27.12.2016)
  */
+
+@Transactional
 public class AbstractService<T> implements CommonService<T> {
 
     private AbstractDao<T> abstractDao;
@@ -41,7 +44,7 @@ public class AbstractService<T> implements CommonService<T> {
     }
 
     @Override
-    public void save(T t) {
-        abstractDao.insert(t);
+    public T save(T t) {
+        return abstractDao.insert(t);
     }
 }

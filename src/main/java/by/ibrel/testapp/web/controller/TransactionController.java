@@ -1,16 +1,14 @@
 package by.ibrel.testapp.web.controller;
 
 import by.ibrel.testapp.LoadSettings;
-import by.ibrel.testapp.logic.bean.Commission;
+import by.ibrel.testapp.logic.model.Commission;
 import by.ibrel.testapp.logic.bean.TransactionDto;
 import by.ibrel.testapp.logic.dao.CardDaoImpl;
-import by.ibrel.testapp.logic.dao.ConnectionFactory;
 import by.ibrel.testapp.logic.dao.HolderDaoImpl;
 import by.ibrel.testapp.logic.dao.TransactionDaoImpl;
 import by.ibrel.testapp.logic.dao.impl.CardDao;
 import by.ibrel.testapp.logic.dao.impl.HolderDao;
 import by.ibrel.testapp.logic.dao.impl.TransactionDao;
-import by.ibrel.testapp.logic.model.Card;
 import by.ibrel.testapp.logic.model.Holder;
 import by.ibrel.testapp.logic.model.Transaction;
 import by.ibrel.testapp.logic.service.CardServiceImpl;
@@ -21,7 +19,6 @@ import by.ibrel.testapp.logic.service.impl.HolderService;
 import by.ibrel.testapp.logic.service.impl.TransactionService;
 import ch.qos.logback.classic.Logger;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.slf4j.LoggerFactory;
 
@@ -32,10 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @author ibrel
@@ -54,10 +47,9 @@ public class TransactionController extends HttpServlet{
     private final LoadSettings loadSettings;
 
     public TransactionController() {
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        CardDao cardDao = new CardDaoImpl(connectionFactory);
-        HolderDao holderDao = new HolderDaoImpl(connectionFactory, cardDao);
-        TransactionDao transactionDao = new TransactionDaoImpl(connectionFactory,holderDao,cardDao);
+        CardDao cardDao = new CardDaoImpl();
+        HolderDao holderDao = new HolderDaoImpl(cardDao);
+        TransactionDao transactionDao = new TransactionDaoImpl(holderDao,cardDao);
         this.cardService = new CardServiceImpl(cardDao);
         this.holderService = new HolderServiceImpl(holderDao);
         this.transactionService = new TransactionServiceImpl(transactionDao);
@@ -100,12 +92,15 @@ public class TransactionController extends HttpServlet{
     }
 
     private Commission getCommission(String currency){
+        final Commission[] commission = {null};
 
-        loadSettings.saveSettings();
+        loadSettings.getSettings().forEach(c -> {
+            if (c.getCurrency().getName().equalsIgnoreCase(currency)){
+                 commission[0] = c;
+            }
+        });
 
-        Commission commission = loadSettings.getSettings();
-
-        logger.info("Commission " + commission.toString());
-        return commission;
+        logger.info("Commission " + commission[0].toString());
+        return commission[0];
     }
 }

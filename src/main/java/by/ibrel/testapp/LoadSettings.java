@@ -1,8 +1,8 @@
 package by.ibrel.testapp;
 
-import by.ibrel.testapp.logic.bean.Brand;
-import by.ibrel.testapp.logic.bean.Commission;
-import by.ibrel.testapp.logic.bean.Currency;
+import by.ibrel.testapp.logic.bean.*;
+import by.ibrel.testapp.logic.model.Commission;
+import by.ibrel.testapp.logic.model.Commissions;
 import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +12,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -39,47 +41,53 @@ public class LoadSettings {
 
         logger.debug("create settings and add to .xml");
 
-        Commission commission = new Commission((long)1, Brand.AMERICAN_EXPRESS, Currency.BYN, BigDecimal.TEN);
+        Commission commissionByn = new Commission(Brand.AMERICAN_EXPRESS, Currency.BYN, BigDecimal.ONE);
+        Commission commissionEur = new Commission(Brand.MASTERCARD, Currency.EUR, BigDecimal.TEN);
+        Commission commissionRUB = new Commission(Brand.AMERICAN_EXPRESS, Currency.RUB, new BigDecimal(3));
+        Commission commissionUSD = new Commission(Brand.MASTERCARD, Currency.USD, new BigDecimal(5));
 
-
-        logger.debug(commission.toString());
+        Commissions commissions = new Commissions();
+        commissions.add(commissionByn);
+        commissions.add(commissionEur);
+        commissions.add(commissionRUB);
+        commissions.add(commissionUSD);
 
         try {
 
-            File file = new File("settings.xml");
-            JAXBContext jaxbContext = JAXBContext.newInstance(Commission.class);
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+            JAXBContext jaxbContext = JAXBContext.newInstance(Commissions.class);
 
+            File file =  new File("settings.xml");
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-            jaxbMarshaller.marshal(commission, file);
+            jaxbMarshaller.marshal(commissions, file);
 
-            logger.debug("settings successfully create and write to file - " + file.getName());
-
+            logger.debug("settings successfully create and write ");
         } catch (JAXBException e) {
             e.printStackTrace();
         }
     }
 
-    public Commission getSettings(){
+    public List<Commission> getSettings(){
 
-        Commission commission = null;
+        List<Commission> commissionsList = new ArrayList<>();
 
         logger.debug("getting settings from .xml");
         try {
 
             File file = new File("settings.xml");
-            JAXBContext jaxbContext = JAXBContext.newInstance(Commission.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(Commissions.class);
 
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            commission = (Commission) jaxbUnmarshaller.unmarshal(file);
+            Commissions commissions = (Commissions) jaxbUnmarshaller.unmarshal(file);
 
+              commissionsList.addAll(commissions.getItems());
             logger.debug("settings successfully getting from file - " + file.getName());
 
         } catch (JAXBException e) {
             e.printStackTrace();
         }
 
-        return commission;
+        return commissionsList;
     }
 }

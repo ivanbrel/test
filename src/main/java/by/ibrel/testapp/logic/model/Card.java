@@ -27,18 +27,18 @@ public class Card implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private int id;
-    private Integer numberCard;
+    private int numberCard;
     private Date validity;
 
     public Card() {
     }
 
-    public Card(Integer numberCard, String validity) {
+    public Card(int numberCard, String validity) {
         this.numberCard = numberCard;
         this.validity = convertStringToDate(validity);
     }
 
-    public Card(int id, Integer numberCard, String validity) {
+    public Card(int id, int numberCard, String validity) {
         this(numberCard, validity);
         this.id = id;
     }

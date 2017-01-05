@@ -31,10 +31,10 @@ public class TransactionDto {
 
     public TransactionDto(Transaction transaction) {
         this.senderName = transaction.getSender().getName();
-        this.senderCardId = transaction.getSender().getCard().getNumberCard().toString();
+        this.senderCardId = String.valueOf(transaction.getSender().getCard().getNumberCard());
         this.senderCardValidity = transaction.getSender().getCard().getValidity().toString();
         this.recipientName = transaction.getRecipient().getName();
-        this.recipientCardId = transaction.getRecipient().getCard().getNumberCard().toString();
+        this.recipientCardId = String.valueOf(transaction.getRecipient().getCard().getNumberCard());
         this.recipientCardValidity = transaction.getRecipient().getCard().getValidity().toString();
         this.commissionBrand = transaction.getCommission().getBrand().getName();
         this.commissionCurrency = transaction.getCommission().getCurrency().getName();
